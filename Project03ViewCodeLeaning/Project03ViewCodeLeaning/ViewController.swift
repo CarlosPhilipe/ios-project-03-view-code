@@ -33,12 +33,26 @@ class ViewController: UIViewController {
         print("Disparou state: \(send.isOn)")
     }
 
+    lazy var button: UIButton = {
+        let b = UIButton(type: .system)
+        b.translatesAutoresizingMaskIntoConstraints = false
+        b.setTitle("Clieck me", for: .normal)
+        b.titleLabel?.font = UIFont.systemFont(ofSize: 25)
+        b.addTarget(self, action: #selector(self.tappedButton (send:)), for: .touchUpInside)
+        return b
+    }()
+
+    @objc func tappedButton(send: UIButton) {
+        print("clicou")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         super.view.backgroundColor = .white
         view.addSubview(self.nameLabel)
         view.addSubview(self.checkSwitch)
+        view.addSubview(self.button)
 
         self.setConstraints()
     }
@@ -58,8 +72,15 @@ class ViewController: UIViewController {
                 equalTo: self.nameLabel.bottomAnchor, constant: 16
             ),
         ])
+
+        NSLayoutConstraint.activate([
+            self.button.centerXAnchor.constraint(equalTo: self.checkSwitch.centerXAnchor),
+            self.button.topAnchor.constraint(
+                equalTo: self.checkSwitch.bottomAnchor, constant: 16
+            ),
+            self.button.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.button.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+        ])
     }
-
-
 }
 
